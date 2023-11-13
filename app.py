@@ -9,4 +9,5 @@ st.number_input("Number of bedrooms", 0)
 st.number_input("Number of bathrooms", 0)
 st.number_input("Number of stories", 0)
 st.number_input("Number of parking spaces", 0)
+st.selectbox("Close to the main road", ["Yes","No"])
 
