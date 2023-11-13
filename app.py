@@ -1,9 +1,6 @@
 import streamlit as st
 
-st.title('Smart Home Prediction Appplication')
+st.title('Smart Home Prediction')
 
-st.write('Hello, world!')
-
-st.subheader("Image:")
-st.image("home.jpg")
+st.image("home.jpg", use_column_width=True)
     
