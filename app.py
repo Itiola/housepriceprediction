@@ -18,8 +18,8 @@ st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])
 st.button("Predict", type="primary")
 if st.button("Hi"):
     st.write('Button clicked')
-#else:
- #   st.write('Goodbye')
+else:
+    st.write('Goodbye')
 
 
 
