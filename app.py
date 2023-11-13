@@ -16,6 +16,10 @@ st.selectbox("Has hotwater heating", ["Yes","No"])
 st.selectbox("Has prefarea", ["Yes","No"])
 st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])
 st.button("Predict", type="primary")
+if st.button('Say hello'):
+    st.write('Why hello there')
+else:
+    st.write('Goodbye')
 
 
 
