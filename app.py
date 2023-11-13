@@ -14,7 +14,10 @@ st.selectbox("Has a guest room", ["Yes","No"])
 st.selectbox("Has a basement", ["Yes","No"])
 st.selectbox("Has hotwater heating", ["Yes","No"])
 st.selectbox("Has prefarea", ["Yes","No"])
-st.radio("Furnishing status:", ["Unfurnished", "Semi-furnished", "Furnished"])
+st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])
+submit_button = st.form_submit_button("Predict")
+if submit_button:
+  print("The button has been clicked")
 
 
 
