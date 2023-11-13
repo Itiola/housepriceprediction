@@ -16,8 +16,7 @@ st.selectbox("Has hotwater heating", ["Yes","No"])
 st.selectbox("Has prefarea", ["Yes","No"])
 st.radio("Furnishing status:", ["Unfurnished", "Semi-furnished", "Furnished"])
 
-st.subheader("Progress bar")
-st.progress(50)
+
 
 
 
