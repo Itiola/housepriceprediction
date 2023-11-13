@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('My Streamlit App')
+st.title('Smart Home Prediction App')
 
 st.write('Hello, world!')
