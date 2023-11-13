@@ -15,7 +15,7 @@ st.selectbox("Has a basement", ["Yes","No"])
 st.selectbox("Has hotwater heating", ["Yes","No"])
 st.selectbox("Has prefarea", ["Yes","No"])
 st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])
-st.button("Predict", type="Primary")
+st.button("Predict", type="primary")
 
 
 
