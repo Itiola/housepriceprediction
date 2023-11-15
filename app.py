@@ -76,6 +76,8 @@ features_2d = np.array([list(features.values())])
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
+    progress_text = "Operation in progress. Please wait."
+    my_bar = st.progress(0, text=progress_text)
     prediction = model.predict(features_2d)
     st.write("Predicted house price:", prediction[0])
 
