@@ -43,13 +43,17 @@ features["bedrooms"] = st.number_input("Number of bedrooms", 0)
 features["bathrooms"] = st.number_input("Number of bathrooms", 0)
 features["stories"] = st.number_input("Number of stories", 0)
 features["parking"] = st.number_input("Number of parking spaces", 0)
-features["mainroad"] = st.selectbox("Close to the main road", ["Yes","No"])
-features["guestroom"] = st.selectbox("Has a guest room", ["Yes","No"])
-features["basement"] = st.selectbox("Has a basement", ["Yes","No"])
-features["hotwaterheatinh"] = st.selectbox("Has hotwater heating", ["Yes","No"])
-features["prefarea"] = st.selectbox("Has prefarea", ["Yes","No"])
-features["furnishingstatus"] = st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])
 
+# Convert 'yes' or 'no' input to 1 for yes and 0 for no
+features["mainroad"] = 1 if st.checkbox("Close to the main road") else 0
+features["guestroom"] = 1 if st.checkbox("Has a guest room") else 0
+features["basement"] = 1 if st.checkbox("Has a basement") else 0
+features["hotwaterheating"] = 1 if st.checkbox("Has hot water heating") else 0
+features["prefarea"] = 1 if st.checkbox("Has prefarea") else 0
+
+# Convert 'unfurnished', 'semi-furnished', and 'furnished' to 0, 1, and 2 respectively
+furnishing_status_mapping = {"Unfurnished": 0, "Semi-furnished": 1, "Furnished": 2}
+features["furnishingstatus"] = furnishing_status_mapping[st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])]
 
 # Define a function to predict the house price
 def predict_house_price(features):
