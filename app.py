@@ -43,6 +43,7 @@ features["bedrooms"] = st.number_input("Number of bedrooms", 0)
 features["bathrooms"] = st.number_input("Number of bathrooms", 0)
 features["stories"] = st.number_input("Number of stories", 0)
 features["parking"] = st.number_input("Number of parking spaces", 0)
+features["airconditioning"] = 1 if st.checkbox("Has airconditioning") else 0
 
 # Convert 'yes' or 'no' input to 1 for yes and 0 for no
 features["mainroad"] = 1 if st.checkbox("Close to the main road") else 0
