@@ -59,10 +59,12 @@ features["furnishingstatus"] = furnishing_status_mapping[st.radio("Furnishing st
 def predict_house_price(features):
     prediction = model.predict([features])
     return prediction[0]
+    
+# Reshape the input data into a 2D array
+features_2d = np.array([features])
 
-# Add a button to predict the house price
+# Predict the house price when the user clicks the submit button
 if st.button("Predict House Price"):
-    prediction = predict_house_price(features)
-    st.write("Predicted house price:", prediction)
-
+    prediction = model.predict(features_2d)
+    st.write("Predicted house price:", prediction[0])
 
