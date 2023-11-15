@@ -81,13 +81,13 @@ progress_bar = st.progress(0)
 if st.button("Predict House Price", type = "primary"):
     
     # Update the progress bar to 100%
-    progress_bar.update(10)
+    progress_bar.progress(10)
 
     prediction = model.predict(features_2d)
     st.write("Predicted house price:", prediction[0])
 
     # Update the progress bar to 100%
-    progress_bar.update(100)
+    progress_bar.progress(100)
 
 
 
