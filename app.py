@@ -76,22 +76,27 @@ features_2d = np.array([list(features.values())])
 
 # Create a progress bar
 progress_bar = st.progress(0)
+progress_bar.status("Processing data...")
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
     
     # Update the progress bar to
     progress_bar.progress(25)
-
+    progress_bar.status("Performing computation...")
+    
     progress_bar.progress(50)
+    progress_bar.status("Finalizing prediction...")
     
     prediction = model.predict(features_2d)
     st.write("Predicted house price:", prediction[0])
 
     progress_bar.progress(75)
+    progress_bar.status("Almost done...")
 
     # Update the progress bar to 100%
     progress_bar.progress(100)
+    progress_bar.status("Prediction complete!")
 
 
 
