@@ -43,14 +43,24 @@ features["bedrooms"] = st.number_input("Number of bedrooms", 0)
 features["bathrooms"] = st.number_input("Number of bathrooms", 0)
 features["stories"] = st.number_input("Number of stories", 0)
 features["parking"] = st.number_input("Number of parking spaces", 0)
-features["airconditioning"] = 1 if st.checkbox("Has airconditioning") else 0
+
 
 # Convert 'yes' or 'no' input to 1 for yes and 0 for no
 features["mainroad"] = 1 if st.checkbox("Close to the main road") else 0
 features["guestroom"] = 1 if st.checkbox("Has a guest room") else 0
 features["basement"] = 1 if st.checkbox("Has a basement") else 0
+features["airconditioning"] = 1 if st.checkbox("Has airconditioning") else 0
 features["hotwaterheating"] = 1 if st.checkbox("Has hot water heating") else 0
 features["prefarea"] = 1 if st.checkbox("Has prefarea") else 0
+
+# Create a selectbox for the main road feature with options "Yes" and "No"
+#main_road_selectbox = st.selectbox("Close to the main road", ["Yes", "No"])
+
+# Convert the selectbox value to 1 or 0
+#if main_road_selectbox == "Yes":
+#    features["mainroad"] = 1
+#else:
+#    features["mainroad"] = 0
 
 # Convert 'unfurnished', 'semi-furnished', and 'furnished' to 0, 1, and 2 respectively
 furnishing_status_mapping = {"Unfurnished": 0, "Semi-furnished": 1, "Furnished": 2}
@@ -65,7 +75,7 @@ def predict_house_price(features):
 features_2d = np.array([list(features.values())])
 
 # Predict the house price when the user clicks the submit button
-if st.button("Predict House Price"):
+if st.button("Predict House Price", type = "primary"):
     prediction = model.predict(features_2d)
     st.write("Predicted house price:", prediction[0])
 
