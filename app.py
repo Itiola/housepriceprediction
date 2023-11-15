@@ -74,10 +74,22 @@ def predict_house_price(features):
 # Convert the input features to a 2D array
 features_2d = np.array([list(features.values())])
 
+# Create a progress bar
+progress_bar = st.progress(0)
+
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
-    progress_text = "Operation in progress. Please wait."
-    my_bar = st.progress(0, text=progress_text)
+    
+    # Update the progress bar to 100%
+    progress_bar.update(10)
+
     prediction = model.predict(features_2d)
     st.write("Predicted house price:", prediction[0])
 
+    # Update the progress bar to 100%
+    progress_bar.update(100)
+
+
+
+
+ 
