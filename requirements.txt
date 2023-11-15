@@ -2,5 +2,5 @@ pandas
 scikit-learn
 joblib
 numpy
-pickle
+pickle==5.9.1
 streamlit
