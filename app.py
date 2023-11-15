@@ -81,14 +81,14 @@ progress_bar.status("Processing data...")
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
-"""    with st.status("Downloading data..."):
-    st.write("Searching for data...")
-    time.sleep(2)
-    st.write("Found URL.")
-    time.sleep(1)
-    st.write("Downloading data...")
-    time.sleep(1)
-"""    
+    #with st.status("Downloading data..."):
+    #st.write("Searching for data...")
+    #time.sleep(2)
+    #st.write("Found URL.")
+    #time.sleep(1)
+    #st.write("Downloading data...")
+    #time.sleep(1)
+    
     # Update the progress bar to
     progress_bar.progress(25)
     progress_bar.status("Performing computation...")
