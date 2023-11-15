@@ -60,8 +60,8 @@ def predict_house_price(features):
     prediction = model.predict([features])
     return prediction[0]
     
-# Reshape the input data into a 2D array
-features_2d = np.array([features])
+# Convert the input features to a 2D array
+features_2d = np.array([list(features.values())])
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price"):
