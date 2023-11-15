@@ -37,7 +37,7 @@ st.title('Smart Home Prediction')
 
 st.image("home.jpg", use_column_width=True)
 
-feature = {}
+features = {}
 features["area"] = st.number_input("Enter the area", 0)
 features["bedrooms"] = st.number_input("Number of bedrooms", 0)
 features["bathrooms"] = st.number_input("Number of bathrooms", 0)
