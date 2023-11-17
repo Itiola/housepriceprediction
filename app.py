@@ -89,7 +89,7 @@ if st.button("Predict House Price", type = "primary"):
     #progress_bar.status("Finalizing prediction...")
     
     prediction = model.predict(features_2d)
-    st.write("<p style='font-size:20px;'>Predicted house price:, prediction[0]</p>", unsafe_allow_html=True)
+    st.write("<p style='font-size:20px;'>Predicted house price:</p>", prediction[0], unsafe_allow_html=True)
     #st.write("Predicted house price:", prediction[0])
 
 # Write text with a font size of 20px
