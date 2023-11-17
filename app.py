@@ -6,7 +6,6 @@ import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
-import time
 #import pickle
 import streamlit as st
 
@@ -81,13 +80,6 @@ progress_bar.status("Processing data...")
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
-    st.status("Downloading data..."):
-    st.write("Searching for data...")
-    time.sleep(2)
-    st.write("Found URL.")
-    time.sleep(1)
-    st.write("Downloading data...")
-    time.sleep(1)
     
     # Update the progress bar to
     #progress_bar.progress(25)
