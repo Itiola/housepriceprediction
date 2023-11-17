@@ -67,6 +67,9 @@ features["prefarea"] = 1 if st.checkbox("Has prefarea") else 0
 furnishing_status_mapping = {"Unfurnished": 0, "Semi-furnished": 1, "Furnished": 2}
 features["furnishingstatus"] = furnishing_status_mapping[st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])]
 
+# Set the locale to use commas for grouping thousands
+locale.setlocale(locale.LC_ALL, 'en_US.utf-8')
+
 # Define a function to predict the house price
 def predict_house_price(features):
     prediction = model.predict([features])
@@ -90,7 +93,9 @@ if st.button("Predict House Price", type = "primary"):
     #progress_bar.status("Finalizing prediction...")
     
     prediction = model.predict(features_2d)
-    st.success("Predicted house price:")
+    # Format the predicted price with commas after three zeros
+    formatted_price = locale.format("%,.2f", prediction)
+    st.success("Predicted house price:", formatted_price)
     st.markdown(f" ${prediction[0]:.2f}")
 
     #st.success("Predicted house price:", prediction[0])
