@@ -66,9 +66,6 @@ features["prefarea"] = 1 if st.checkbox("Has prefarea") else 0
 furnishing_status_mapping = {"Unfurnished": 0, "Semi-furnished": 1, "Furnished": 2}
 features["furnishingstatus"] = furnishing_status_mapping[st.radio("Furnishing status", ["Unfurnished", "Semi-furnished", "Furnished"])]
 
-# Set the locale to use commas for grouping thousands
-locale.setlocale(locale.LC_ALL, 'en_US.utf-8')
-
 # Define a function to predict the house price
 def predict_house_price(features):
     prediction = model.predict([features])
