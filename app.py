@@ -8,6 +8,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 #import pickle
 import streamlit as st
+import locale
 
 #Load the data
 data = pd.read_csv('housing.csv')
