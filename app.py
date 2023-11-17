@@ -94,8 +94,7 @@ if st.button("Predict House Price", type = "primary"):
     
     prediction = model.predict(features_2d)
     # Format the predicted price with commas after three zeros
-    formatted_price = locale.format("%,.2f", prediction)
-    st.success("Predicted house price:", formatted_price)
+    st.success("Predicted house price:")
     st.markdown(f" ${prediction[0]:.2f}")
 
     #st.success("Predicted house price:", prediction[0])
