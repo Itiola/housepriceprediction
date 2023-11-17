@@ -92,6 +92,7 @@ if st.button("Predict House Price", type = "primary"):
     st.write("<p style='font-size:20px;'>Predicted house price:</p>", prediction[0], unsafe_allow_html=True)
     #st.write("Predicted house price:", prediction[0])
 
+    st.success("Predicted price")
 # Write text with a font size of 20px
 
 
