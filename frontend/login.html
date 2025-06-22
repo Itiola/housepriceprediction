@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | House Predictor</title>
+  <style>
+    :root {
+      --green: #4caf50;
+      --green-dark: #388e3c;
+      --grey: #f5f5f5;
+      --white: #ffffff;
+      --text-dark: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--grey);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: var(--white);
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--green-dark);
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      border-color: var(--green);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background-color: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--green-dark);
+    }
+
+    .options {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .options a {
+      color: var(--green-dark);
+      text-decoration: none;
+    }
+
+    .options a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome Back 👋</h2>
+    <div id="error" class="error-message"></div>
+    <input type="email" id="email" placeholder="Email Address" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <div class="options">
+      <a href="#">Forgot password?</a>
+      <a href="register.html">Register</a>
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('error');
+      errorDiv.textContent = '';
+
+      if (!email || !password) {
+        errorDiv.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Optionally store user data in localStorage/sessionStorage
+          // localStorage.setItem("user", JSON.stringify(data.user));
+          window.location.href = 'predict.html';
+        } else {
+          errorDiv.textContent = data.detail || data.message || 'Login failed.';
+        }
+      } catch (error) {
+        errorDiv.textContent = 'Server error. Please try again later.';
+      }
+    }
+  </script>
+</body>
+</html>
