@@ -74,15 +74,49 @@ def predict_house_price(features):
 # Convert the input features to a 2D array
 features_2d = np.array([list(features.values())])
 
+<<<<<<< HEAD
+=======
+# Create a progress bar
+#progress_bar = st.progress(0)
+#progress_bar.status("Processing data...")
+>>>>>>> 9fbed842d7ebfc4ec9d010dddf70e6e8da01adc4
 
 # Predict the house price when the user clicks the submit button
 if st.button("Predict House Price", type = "primary"):
     
+<<<<<<< HEAD
+=======
+    # Update the progress bar to
+    #progress_bar.progress(25)
+    #progress_bar.status("Performing computation...")
+    
+    #progress_bar.progress(50)
+    #progress_bar.status("Finalizing prediction...")
+    
+>>>>>>> 9fbed842d7ebfc4ec9d010dddf70e6e8da01adc4
     prediction = model.predict(features_2d)
     # Format the predicted price with commas after three zeros
     st.success("Predicted house price:")
     st.markdown(f" ${prediction[0]:.2f}")
 
+<<<<<<< HEAD
+=======
+    #st.success("Predicted house price:", prediction[0])
+    #st.write("<p style='font-size:20px;'>Predicted house price:</p>", prediction[0], unsafe_allow_html=True)
+    #st.write("Predicted house price:", prediction[0])
+
+    #st.success("Predicted price")
+# Write text with a font size of 20px
+
+
+
+    #progress_bar.progress(75)
+    #progress_bar.status("Almost done...")
+
+    # Update the progress bar to 100%
+    #progress_bar.progress(100)
+    #progress_bar.status("Prediction complete!")
+>>>>>>> 9fbed842d7ebfc4ec9d010dddf70e6e8da01adc4
 
 
 
