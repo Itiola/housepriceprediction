@@ -57,7 +57,7 @@ async def predict(
     final_input = list(scaled_numeric) + raw_features[numeric_cols_count:]
 
     prediction = model.predict([final_input])[0]
-    formatted_price = f"Estimated Price: ₹{round(prediction, 2):,}"
+    formatted_price = f"Estimated Price: ${round(prediction, 2):,}"
 
     return templates.TemplateResponse("predict.html", {
         "request": request,
