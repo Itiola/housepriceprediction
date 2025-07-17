@@ -1,117 +1,65 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
-from pydantic import BaseModel, EmailStr
-from typing import Optional
-from sqlalchemy.orm import Session
-import bcrypt
+from fastapi.templating import Jinja2Templates
+import joblib
 import os
-
-from database import SessionLocal, engine
-from model import User
-import model
-
-# Create DB tables
-model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# --- CORS ---
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:5500",
-        "http://localhost:5500"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Templates directory is in the parent folder, 'frontend'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "frontend")
 
-# --- Dependency ---
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+templates = Jinja2Templates(directory=TEMPLATE_DIR)
 
-# --- Schemas ---
-class RegisterRequest(BaseModel):
-    firstname: str
-    middlename: Optional[str] = None
-    lastname: str
-    email: EmailStr
-    password: str
+# Load model and scaler
+model = joblib.load(os.path.join(os.path.dirname(__file__), "model.pkl"))
+scaler = joblib.load(os.path.join(os.path.dirname(__file__), "scaler.pkl"))
 
-class RegisterResponse(BaseModel):
-    message: str
+yes_no_map = {'yes': 1, 'no': 0}
+furnish_map = {'unfurnished': 0, 'semi-furnished': 1, 'furnished': 2}
+numeric_cols_count = 5  # area, bedrooms, bathrooms, stories, parking
 
-class LoginRequest(BaseModel):
-    email: EmailStr
-    password: str
+@app.get("/", response_class=HTMLResponse)
+async def form_get(request: Request):
+    return templates.TemplateResponse("predict.html", {"request": request})
 
-class LoginResponse(BaseModel):
-    message: str
-    user: dict
+@app.post("/predict", response_class=HTMLResponse)
+async def predict(
+    request: Request,
+    area: float = Form(...),
+    bedrooms: int = Form(...),
+    bathrooms: int = Form(...),
+    stories: int = Form(...),
+    mainroad: str = Form(...),
+    guestroom: str = Form(...),
+    basement: str = Form(...),
+    hotwaterheating: str = Form(...),
+    airconditioning: str = Form(...),
+    parking: int = Form(...),
+    prefarea: str = Form(...),
+    furnishingstatus: str = Form(...)
+):
+    raw_features = [
+        area, bedrooms, bathrooms, stories, parking,
+        yes_no_map[mainroad.lower()],
+        yes_no_map[guestroom.lower()],
+        yes_no_map[basement.lower()],
+        yes_no_map[hotwaterheating.lower()],
+        yes_no_map[airconditioning.lower()],
+        yes_no_map[prefarea.lower()],
+        furnish_map[furnishingstatus.lower()]
+    ]
 
-class PredictRequest(BaseModel):
-    bedrooms: int
-    bathrooms: int
-    area: float
-    age: int
+    # Scale numeric features
+    scaled_numeric = scaler.transform([raw_features[:numeric_cols_count]])[0]
+    final_input = list(scaled_numeric) + raw_features[numeric_cols_count:]
 
-class PredictResponse(BaseModel):
-    price: float
+    prediction = model.predict([final_input])[0]
+    formatted_price = f"Estimated Price: ₹{round(prediction, 2):,}"
 
-# --- Routes ---
-@app.post("/api/register", response_model=RegisterResponse)
-def register(req: RegisterRequest, db: Session = Depends(get_db)):
-    existing = db.query(User).filter(User.email == req.email).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
-
-    hashed_password = bcrypt.hashpw(req.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    user = User(
-        firstname=req.firstname,
-        middlename=req.middlename,
-        lastname=req.lastname,
-        email=req.email,
-        password=hashed_password
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return RegisterResponse(message="Registration successful")
-
-@app.post("/api/login", response_model=LoginResponse)
-def login(req: LoginRequest, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == req.email).first()
-    if not user or not bcrypt.checkpw(req.password.encode('utf-8'), user.password.encode('utf-8')):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
-
-    return {
-        "message": "Login successful",
-        "user": {
-            "firstname": user.firstname,
-            "middlename": user.middlename,
-            "lastname": user.lastname,
-            "email": user.email
-        }
-    }
-
-@app.post("/api/predict", response_model=PredictResponse)
-def predict(req: PredictRequest):
-    base_price = 50000
-    price = base_price + (req.bedrooms * 20000) + (req.bathrooms * 15000) + (req.area * 100) - (req.age * 1000)
-    return {"price": round(price, 2)}
-
-# --- Serve frontend ---
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
-app.mount("/static", StaticFiles(directory=frontend_path, html=True), name="static")
-
-# Optional: redirect root to index.html
-@app.get("/")
-def root():
-    return RedirectResponse("/static/index.html")
+    return templates.TemplateResponse("predict.html", {
+        "request": request,
+        "result": formatted_price
+    })
