@@ -12,10 +12,6 @@ import joblib
 # Load data
 df = pd.read_csv("housing.csv")
 
-# -------------------------------
-# Preprocessing setup
-# -------------------------------
-
 # Define features and target
 features = ['area', 'bedrooms', 'bathrooms', 'stories', 'mainroad',
             'guestroom', 'basement', 'hotwaterheating', 'airconditioning',
